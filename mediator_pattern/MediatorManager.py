@@ -3,10 +3,14 @@ class EnergyManager:
         self.inverter_proxy = inverterProxy
         self.router_proxy = routerProxy
 
-    def handle_battery_level(self, inverter_battery_level):
+    def handle_inverter_battery_level(self, inverter_battery_level):
         if inverter_battery_level < 20:
             self.router_proxy.set_power_mode("saving")
         else:
             self.router_proxy.set_power_mode("normal")
 
-    
+
+    def handle_status(self, data):
+        inverter_battery = data["inverter"]["battery"]
+        self.handle_inverter_battery_level(inverter_battery)
+        
