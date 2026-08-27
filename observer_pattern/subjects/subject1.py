@@ -1,4 +1,4 @@
-from subjects import Notificationhandle
+from observer_pattern.subjects import Notificationhandle
 
 class subject1:
     def __init__(self):
@@ -23,11 +23,11 @@ class subject1:
         print(f"[SUBJECT] Length of Handle list: {len(self.listofNotificationHandle)} ")
 
     def insert(self, data):
-        print(f"Data added: {data}")
-        self.notify()
+        # print(f"Data added: {data}")
+        self.notify(data)
 
-    def notify(self):
+    def notify(self, data):
         print(f"[SUBJECT] Notifying Subscribers")
         for handle in self.listofNotificationHandle:
             print(f"Notifiying {handle.observer_name} ")
-            handle.update_observer(handle.observer)
+            handle.update_observer(handle.observer, data)
