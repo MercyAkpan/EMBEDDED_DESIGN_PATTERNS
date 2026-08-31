@@ -5,13 +5,17 @@ from polling_pattern import poller
 from queueing_pattern.queue import MessageQueue
 from observer_pattern.observers.Logger import Logger
 from observer_pattern.subjects.subject1 import subject1
+from single_event_receptor_pattern.event_state_machine import EnergyStateMachine
+
 
 def main():
     inverter_proxy = InverterProxy()
     router_proxy = RouterProxy()
-    energy_manager = EnergyManager(inverter_proxy, router_proxy)
+    state_machine = EnergyStateMachine()
+
+    energy_manager = EnergyManager(inverter_proxy, router_proxy, state_machine)
     _poller = poller.Poller(inverter_proxy, router_proxy)
-    queue = MessageQueue()
+    # queue = MessageQueue()
     logger = Logger()
 
     ProcessorTask = subject1()
@@ -24,14 +28,14 @@ def main():
     while running:
         status = _poller.poll()
 
-        queue.insert(status)
+        # queue.insert(status)
 
-        data = queue.remove()
+        # data = queue.remove()
 
-        if data:
-            ProcessorTask.insert(data)
-        else:
-            print(f"[MAIN] No Data...")
+        # if status:
+        ProcessorTask.insert(status)
+        # else:
+            # print(f"[MAIN] No Data...")
         # energy_manager.handle_status(status)
 
         sleep(2)

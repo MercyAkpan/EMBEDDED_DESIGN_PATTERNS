@@ -1,9 +1,11 @@
+import random
+
 class InverterProxy:
     def get_status(self):
         return {
-            "voltage": 230.0,
-            "power": 450.0,
-            "battery": 30.0
+            "voltage": round(random.uniform(220.0, 240.0), 1),
+            "power": round(random.uniform(100.0, 500.0), 1),
+            "battery": round(random.uniform(0.0, 100.0), 1)
         }
 
 
